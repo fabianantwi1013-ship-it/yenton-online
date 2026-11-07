@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Find It For Me — Yɛntɔn Online</title>
+  <meta name="description" content="Can't find what you need? Tell Yɛntɔn Online and our team will find a seller for you.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0a7a36">
+  <link rel="icon" href="assets/icon-192.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+</head>
+<body data-page="find" data-mascot="Tell me wetin you dey find — I go shout am for you! 📣">
+<div id="site-header"></div>
+
+<main>
+  <section class="page-hero">
+    <div class="container">
+      <p class="crumbs"><a href="index.html">Home</a> › Find it for me</p>
+      <h1 data-i18n="find.title">Can't find it? We'll find it for you</h1>
+      <p class="lead">Tell us what you need and your budget. Our team will match you with a seller and send you their contact.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container advertise">
+      <div class="advertise-copy">
+        <p class="eyebrow">How it works</p>
+        <h2>Ask once. We do the searching.</h2>
+        <ul class="ticks">
+          <li>Tell us exactly what you want and how much you can spend</li>
+          <li>We check our sellers and partners near you</li>
+          <li>We send you sellers to chat with on WhatsApp — free for buyers</li>
+        </ul>
+        <p class="muted-small">Example: “A used fridge in Kumasi under GH₵2,000” or “Photographer for a naming ceremony in Tema next Saturday”.</p>
+      </div>
+      <form class="card form" id="findForm">
+        <label>What are you looking for?<textarea name="want" id="findWant" rows="3" required placeholder="Describe the product or service"></textarea></label>
+        <div class="row">
+          <label>Category<select name="category" id="findCategory"><option value="">Any</option></select></label>
+          <label>Your budget (GH₵)<input name="budget" type="number" min="0" inputmode="numeric" placeholder="e.g. 2000"></label>
+        </div>
+        <div class="row">
+          <label>Your area<select name="region" id="findRegion"><option value="">Anywhere in Ghana</option></select></label>
+          <label>When do you need it?<input name="when" placeholder="e.g. this week"></label>
+        </div>
+        <label>Your name<input name="name" required></label>
+        <button class="btn btn-primary btn-block" type="submit">Send request via WhatsApp</button>
+        <p class="form-hint">This opens WhatsApp with your request ready to send.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<script src="i18n.js"></script>
+<script src="data.js"></script>
+<script src="layout.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

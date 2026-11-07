@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shop — Yɛntɔn Online</title>
+  <meta name="description" content="Browse products and services from Ghanaian businesses on Yɛntɔn Online.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0a7a36">
+  <link rel="icon" href="assets/icon-192.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+</head>
+<body data-page="shop" data-mascot="Akwaaba! Use the filters to find something near you.">
+<div id="site-header"></div>
+
+<main>
+  <section class="page-hero">
+    <div class="container">
+      <p class="crumbs"><a href="index.html">Home</a> › Shop</p>
+      <h1>Shop the marketplace</h1>
+      <p class="lead">Find what you need, then contact the seller directly on WhatsApp.</p>
+      <form class="search" id="searchForm" role="search">
+        <input type="search" name="q" id="searchInput" data-i18n-placeholder="search.placeholder" placeholder="Search phones, rice, apartments, photographers…" aria-label="Search products and services">
+        <select name="cat" id="searchCategory" aria-label="Category">
+          <option value="all">All categories</option>
+        </select>
+        <button class="btn btn-primary" type="submit" data-i18n="search.button">Search</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <div class="filters card">
+        <div class="filter-row">
+          <span class="filter-label">Category</span>
+          <div class="chips" id="filterChips"></div>
+        </div>
+        <div class="filter-row">
+          <span class="filter-label">Price</span>
+          <div class="chips" id="priceChips"></div>
+        </div>
+        <div class="filter-row">
+          <span class="filter-label">Near</span>
+          <select id="regionSelect" class="region-select" aria-label="Location">
+            <option value="all">📍 All of Ghana</option>
+          </select>
+          <button class="chip chip-verified" id="verifiedToggle" aria-pressed="false">✔ Verified sellers only</button>
+          <button class="chip" id="savedToggle" aria-pressed="false">❤ Saved</button>
+        </div>
+      </div>
+      <div class="section-head listings-head">
+        <div>
+          <p class="eyebrow" id="resultCount">Marketplace</p>
+          <h2 id="listingsTitle">Featured &amp; recently listed</h2>
+        </div>
+      </div>
+      <div class="product-grid" id="productGrid"></div>
+      <div class="empty" id="emptyState" hidden></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container next-step">
+      <div>
+        <p class="eyebrow">Next step</p>
+        <h2>Looking for a bargain?</h2>
+        <p class="muted-left">See the biggest discounts on Yɛntɔn Online right now.</p>
+      </div>
+      <a href="deals.html" class="btn btn-gold">See Affordable Deals →</a>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<script src="i18n.js"></script>
+<script src="data.js"></script>
+<script src="layout.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

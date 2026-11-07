@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yɛntɔn Online — Your Marketplace. Your Customers. More Sales.</title>
+  <meta name="description" content="Yɛntɔn Online is a Ghanaian digital marketplace and advertising platform connecting businesses with customers.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0a7a36">
+  <link rel="icon" href="assets/icon-192.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+</head>
+<body data-page="home">
+<div id="site-header"></div>
+
+<main>
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <div class="signposts" aria-label="Shop Online, Buy Ghanaian, Support Local">
+          <span>Shop Online</span><span>Buy Ghanaian</span><span>Support Local</span>
+        </div>
+        <h1>Your Marketplace.<br>Your Customers.<br><span class="accent">More Sales.</span></h1>
+        <p class="plank">Yɛtɔn Bebiaa!</p>
+        <p class="lead">Discover products and services from trusted Ghanaian businesses — or let our team advertise your products to the buyers who want them.</p>
+        <form class="search" id="searchForm" role="search" action="shop.html">
+          <input type="search" name="q" id="searchInput" data-i18n-placeholder="search.placeholder" placeholder="Search phones, rice, apartments, photographers…" aria-label="Search products and services">
+          <select name="cat" id="searchCategory" aria-label="Category">
+            <option value="all">All categories</option>
+          </select>
+          <button class="btn btn-primary" type="submit" data-i18n="search.button">Search</button>
+        </form>
+        <div class="hero-stats">
+          <div><strong>7+</strong><span>Categories</span></div>
+          <div><strong>WhatsApp</strong><span>Direct to sellers</span></div>
+          <div><strong>Targeted</strong><span>Facebook &amp; Instagram ads</span></div>
+        </div>
+        <a class="fb-proof" id="fbProof" target="_blank" rel="noopener">
+          <span class="fb-icon">f</span>
+          <span><b><span data-config="facebookFollowers"></span> followers</b> on Facebook</span>
+          <em>Follow us →</em>
+        </a>
+      </div>
+      <div class="hero-art">
+        <img src="assets/yenton-poster.webp" alt="Yɛntɔn Online mascot announcing the marketplace with a megaphone — Yɛtɔn Bebiaa" width="1254" height="1254" fetchpriority="high">
+      </div>
+    </div>
+  </section>
+
+  <section class="featured-strip" aria-label="Featured today">
+    <div class="container">
+      <p class="eyebrow">📣 Featured today</p>
+      <div class="hero-card-grid" id="heroGrid"></div>
+    </div>
+  </section>
+
+  <section class="section section-tight">
+    <div class="container" id="dealOfDay"></div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Browse</p>
+          <h2>Shop by category</h2>
+        </div>
+        <a href="shop.html" class="btn btn-outline btn-sm">See all products →</a>
+      </div>
+      <div class="category-grid" id="categoryGrid"></div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head center">
+        <p class="eyebrow">Where do you want to go?</p>
+        <h2>Pick your next step</h2>
+      </div>
+      <div class="path-grid">
+        <a class="path-card" href="shop.html">
+          <span>🛒</span><h3 data-i18n="path.buy">I want to buy</h3>
+          <p>Browse products near you, then chat with sellers directly on WhatsApp.</p>
+          <em>Go to the Shop →</em>
+        </a>
+        <a class="path-card" href="deals.html">
+          <span>🏷️</span><h3 data-i18n="path.deal">I want a good deal</h3>
+          <p>Deal of the Day, discounts and special offers from Ghanaian sellers.</p>
+          <em>See Deals →</em>
+        </a>
+        <a class="path-card" href="find.html">
+          <span>🔎</span><h3 data-i18n="path.find">Find it for me</h3>
+          <p>Can't find what you need? Tell us and our team will find a seller for you.</p>
+          <em>Ask Yɛntɔn →</em>
+        </a>
+        <a class="path-card path-card-gold" href="how-it-works.html">
+          <span>📣</span><h3 data-i18n="path.sell">I want to sell</h3>
+          <p>We advertise your products and bring you customers, step by step.</p>
+          <em>How it works →</em>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container" id="spotlight"></div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<script src="i18n.js"></script>
+<script src="data.js"></script>
+<script src="layout.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

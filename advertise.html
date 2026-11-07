@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Advertise With Us — Yɛntɔn Online</title>
+  <meta name="description" content="Submit your product to Yɛntɔn Online and let our team handle the marketing.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0a7a36">
+  <link rel="icon" href="assets/icon-192.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+</head>
+<body data-page="advertise" data-mascot="Send it on WhatsApp — photos, price, location. We handle the rest!">
+<div id="site-header"></div>
+
+<main>
+  <section class="page-hero">
+    <div class="container">
+      <p class="crumbs"><a href="index.html">Home</a> › <a href="how-it-works.html">How it works</a> › <a href="packages.html">Packages</a> › Advertise</p>
+      <h1>Submit your product.<br>We'll handle the marketing.</h1>
+      <ol class="journey" aria-label="Seller journey">
+        <li class="done"><span>✓</span><a href="how-it-works.html">How it works</a></li>
+        <li class="done"><span>✓</span><a href="packages.html">Choose a package</a></li>
+        <li class="current"><span>3</span>Submit your product</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container advertise">
+      <div class="advertise-copy">
+        <p class="eyebrow">Advertise With Us</p>
+        <h2>Every legitimate business deserves customers</h2>
+        <p>Tell us about what you sell and our team will get back to you with a plan.</p>
+        <ul class="ticks">
+          <li>Open to businesses of every size — and individuals</li>
+          <li>Food, electronics, fashion, cars, property, home &amp; services</li>
+          <li>All listings reviewed under our advertising policy and Ghanaian law</li>
+        </ul>
+        <div class="quick-sell">
+          <h3 data-i18n="quick.title">Too busy for forms?</h3>
+          <p>Just send us <b>3 photos</b>, the <b>price</b> and your <b>location</b> on WhatsApp. Our team writes the ad for you.</p>
+          <a class="btn btn-wa btn-block" id="quickSell" target="_blank" rel="noopener">💬 <span data-i18n="quick.button">Send photos on WhatsApp</span></a>
+          <a class="btn btn-outline btn-block" id="voiceNote" target="_blank" rel="noopener">🎤 <span data-i18n="quick.voice">Send a voice note</span></a>
+        </div>
+      </div>
+      <form class="card form" id="advertiseForm">
+        <div class="row">
+          <label>Your name<input name="name" required></label>
+          <label>Business name<input name="business"></label>
+        </div>
+        <div class="row">
+          <label>WhatsApp / phone<input name="phone" type="tel" required placeholder="e.g. 024 000 0000"></label>
+          <label>Location<input name="location" placeholder="e.g. Kumasi, Adum"></label>
+        </div>
+        <div class="row">
+          <label>Category<select name="category" id="formCategory" required></select></label>
+          <label>Package<select name="plan" id="formPlan">
+            <option>Not sure yet</option>
+            <option>Starter Listing</option>
+            <option>Sponsored Campaign</option>
+            <option>Business Promotion</option>
+          </select></label>
+        </div>
+        <label>Referred by <small>(optional — who told you about us?)</small><input name="ref" id="formRef" placeholder="Name of the business that referred you"></label>
+        <label>Product / service and price<textarea name="details" rows="4" required placeholder="What are you selling? Include prices and any offers."></textarea></label>
+        <button class="btn btn-primary btn-block" type="submit">Send via WhatsApp</button>
+        <p class="form-hint">This opens WhatsApp with your details ready to send. You can attach your photos and videos there.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<script src="i18n.js"></script>
+<script src="data.js"></script>
+<script src="layout.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
