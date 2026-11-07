@@ -1,6 +1,6 @@
 // Offline support: always try the network first (so updates show immediately),
 // and fall back to the last saved copy when the connection drops.
-const CACHE = "yenton-v1";
+const CACHE = "yenton-v2";
 const CORE = [
   "index.html", "shop.html", "deals.html", "directory.html", "how-it-works.html",
   "packages.html", "advertise.html", "contact.html", "find.html", "report.html",

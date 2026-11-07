@@ -15,6 +15,9 @@
   const regionOptions = REGIONS.map((r) => `<option value="${r.id}">${escape(r.name)}</option>`).join("");
   const siteLink = (path) => `https://${CONFIG.siteUrl}/${path}`;
   const discountOf = (p) => (p.oldPrice ? Math.round((1 - p.price / p.oldPrice) * 100) : 0);
+  // Photo over the category icon; if the photo fails to load, the icon shows instead.
+  const photo = (src, alt) =>
+    src ? `<img class="photo" src="${escape(src)}" alt="${escape(alt)}" loading="lazy" decoding="async" onerror="this.remove()">` : "";
   const stars = (rating) => "★".repeat(Math.round(rating)) + "☆".repeat(5 - Math.round(rating));
 
   // ---------- per-viewer preferences (browser storage) ----------
@@ -43,7 +46,7 @@
     return `
       <article class="product">
         <div class="product-media cat-${p.category}">
-          <span>${cat.icon}</span>
+          <span>${cat.icon}</span>${photo(p.image, p.title)}
           ${discount ? `<b class="badge-deal">-${discount}%</b>` : ""}
           ${p.featured ? `<b class="badge-feat">${t("badge.featured")}</b>` : ""}
           <button class="heart ${saved.has(p.id) ? "on" : ""}" data-save="${p.id}" aria-label="${t("card.save")}" aria-pressed="${saved.has(p.id)}">${saved.has(p.id) ? "❤" : "♡"}</button>
@@ -83,14 +86,17 @@
   });
 
   // ---------- WhatsApp Status share image ----------
-  let mascotImg;
-  function loadMascot() {
-    if (!mascotImg) mascotImg = new Promise((resolve) => {
+  function loadImage(src) {
+    return new Promise((resolve) => {
       const img = new Image();
       img.onload = () => resolve(img);
       img.onerror = () => resolve(null);
-      img.src = "assets/mascot-face.jpg";
+      img.src = src;
     });
+  }
+  let mascotImg;
+  function loadMascot() {
+    if (!mascotImg) mascotImg = loadImage("assets/mascot-face.jpg");
     return mascotImg;
   }
 
@@ -141,9 +147,19 @@
     ctx.fillStyle = "#fff"; roundRect(ctx, cx, cy, cw, ch, 48); ctx.fill();
     const tint = getComputedStyle(document.querySelector(`.cat-${p.category}`) || document.body).getPropertyValue("--tint").trim() || "#fff4dc";
     ctx.fillStyle = tint; roundRect(ctx, cx + 30, cy + 30, cw - 60, 520, 32); ctx.fill();
-    ctx.font = `300px ${body}`; ctx.textBaseline = "middle";
-    ctx.fillText(catById[p.category].icon, W / 2, cy + 300);
-    ctx.textBaseline = "alphabetic";
+    const pic = p.image ? await loadImage(p.image) : null;
+    if (pic) {
+      // cover-fit the product photo into the rounded box
+      const bw = cw - 60, bh = 520, scale = Math.max(bw / pic.width, bh / pic.height);
+      const sw = bw / scale, sh = bh / scale;
+      ctx.save(); roundRect(ctx, cx + 30, cy + 30, bw, bh, 32); ctx.clip();
+      ctx.drawImage(pic, (pic.width - sw) / 2, (pic.height - sh) / 2, sw, sh, cx + 30, cy + 30, bw, bh);
+      ctx.restore();
+    } else {
+      ctx.font = `300px ${body}`; ctx.textBaseline = "middle";
+      ctx.fillText(catById[p.category].icon, W / 2, cy + 300);
+      ctx.textBaseline = "alphabetic";
+    }
 
     const discount = discountOf(p);
     if (discount) {
@@ -174,6 +190,9 @@
     ctx.textAlign = "left";
     ctx.fillStyle = "#053d1b"; ctx.font = `72px ${display}`; ctx.fillText("Yɛtɔn Bebiaa!", 360, 1650);
     ctx.font = `bold 42px ${body}`; ctx.fillText("Chat the seller on WhatsApp", 360, 1715);
+    // shrink the web address until it fits beside the mascot
+    let urlSize = 42;
+    do { ctx.font = `bold ${urlSize}px ${body}`; urlSize -= 2; } while (ctx.measureText(CONFIG.siteUrl).width > W - 400 && urlSize > 20);
     ctx.fillStyle = "#0a7a36"; ctx.fillText(CONFIG.siteUrl, 360, 1772);
 
     // flag stripe
@@ -232,7 +251,7 @@
     const msg = `Hello ${p.seller}, I saw your Deal of the Day "${p.title}" on Yɛntɔn Online. Is it still available?`;
     $("#dealOfDay").innerHTML = `
       <div class="dotd">
-        <div class="dotd-media cat-${p.category}"><span>${cat.icon}</span><b class="badge-deal">-${discountOf(p)}%</b></div>
+        <div class="dotd-media cat-${p.category}"><span>${cat.icon}</span>${photo(p.image, p.title)}<b class="badge-deal">-${discountOf(p)}%</b></div>
         <div class="dotd-body">
           <p class="dotd-tag">🔥 ${t("deal.title")}</p>
           <h2>${escape(p.title)}</h2>
@@ -261,7 +280,7 @@
     const cat = catById[s.category];
     $("#spotlight").innerHTML = `
       <article class="spotlight">
-        <div class="spotlight-avatar cat-${s.category}">${cat.icon}</div>
+        <div class="spotlight-avatar cat-${s.category}"><span>${cat.icon}</span>${photo(SPOTLIGHT.image, s.name)}</div>
         <div>
           <p class="eyebrow">⭐ Seller Spotlight</p>
           <h2>${escape(SPOTLIGHT.headline)}</h2>
@@ -281,7 +300,7 @@
       const count = PRODUCTS.filter((p) => p.category === c.id).length;
       return `
         <a class="category cat-${c.id}" href="shop.html?cat=${c.id}">
-          <span class="category-icon">${c.icon}</span>
+          <div class="category-photo">${photo(c.image, c.name)}<span class="category-icon">${c.icon}</span></div>
           <strong>${escape(c.name)}</strong>
           <small>${escape(c.desc)}</small>
           <em>${count} listing${count === 1 ? "" : "s"} →</em>
@@ -292,7 +311,7 @@
   function renderHero() {
     $("#heroGrid").innerHTML = PRODUCTS.filter((p) => p.featured).slice(0, 4).map((p) => `
       <a class="mini cat-${p.category}" href="shop.html?cat=${p.category}">
-        <span>${catById[p.category].icon}</span>
+        <span class="mini-thumb">${catById[p.category].icon}${photo(p.image, p.title)}</span>
         <p>${escape(p.title)}</p>
         <strong>${cedi(p.price)}</strong>
       </a>`).join("");

@@ -32,13 +32,13 @@ const CONFIG = {
 };
 
 const CATEGORIES = [
-  { id: "food", name: "Food & Groceries", icon: "🍚", desc: "Foodstuffs, fresh produce, meat & fish, restaurants" },
-  { id: "electronics", name: "Electronics & Tech", icon: "📱", desc: "Phones, laptops, TVs, appliances, gadgets" },
-  { id: "fashion", name: "Fashion & Beauty", icon: "👗", desc: "Clothes, footwear, cosmetics, hair, beauty services" },
-  { id: "auto", name: "Automobiles", icon: "🚗", desc: "Cars, motorbikes, spare parts, car rental" },
-  { id: "property", name: "Property & Real Estate", icon: "🏠", desc: "Houses, apartments, land, commercial space" },
-  { id: "home", name: "Home & Lifestyle", icon: "🛋️", desc: "Furniture, building materials, décor" },
-  { id: "services", name: "Services", icon: "📸", desc: "Events, photography, cleaning, travel, professionals" },
+  { id: "food", image: "assets/photos/p16.webp", name: "Food & Groceries", icon: "🍚", desc: "Foodstuffs, fresh produce, meat & fish, restaurants" },
+  { id: "electronics", image: "assets/photos/p3.webp", name: "Electronics & Tech", icon: "📱", desc: "Phones, laptops, TVs, appliances, gadgets" },
+  { id: "fashion", image: "assets/photos/p6.webp", name: "Fashion & Beauty", icon: "👗", desc: "Clothes, footwear, cosmetics, hair, beauty services" },
+  { id: "auto", image: "assets/photos/p8.webp", name: "Automobiles", icon: "🚗", desc: "Cars, motorbikes, spare parts, car rental" },
+  { id: "property", image: "assets/photos/p10.webp", name: "Property & Real Estate", icon: "🏠", desc: "Houses, apartments, land, commercial space" },
+  { id: "home", image: "assets/photos/p12.webp", name: "Home & Lifestyle", icon: "🛋️", desc: "Furniture, building materials, décor" },
+  { id: "services", image: "assets/photos/p14.webp", name: "Services", icon: "📸", desc: "Events, photography, cleaning, travel, professionals" },
 ];
 
 // Areas buyers can filter by. Each product's `region` must be one of these ids.
@@ -59,24 +59,26 @@ const PRICE_BANDS = [
 ];
 
 // SAMPLE LISTINGS — placeholders to show the layout. Replace with real seller listings.
+// image: put the seller's photo in assets/photos/ (about 600×450, .webp or .jpg). Leave it out to show the category icon.
+// Sample photos are free stock photos from Unsplash.
 // `seller` must match a name in SELLERS below to show its Verified badge and rating.
 const PRODUCTS = [
-  { id: 1, title: "Jasmine Rice, 25kg bag", category: "food", price: 650, oldPrice: 720, location: "Kumasi", region: "kumasi", seller: "Sample Foods Ltd", whatsapp: "233206674019", featured: true },
-  { id: 2, title: "Pure Vegetable Cooking Oil, 5L", category: "food", price: 165, location: "Accra", region: "accra", seller: "Sample Foods Ltd", whatsapp: "233206674019" },
-  { id: 3, title: "Smartphone 128GB, Dual SIM", category: "electronics", price: 2400, oldPrice: 2800, location: "Accra, Circle", region: "accra", seller: "Sample Phones", whatsapp: "233206674019", featured: true },
-  { id: 4, title: "Laptop Core i5, 8GB RAM, 256GB SSD", category: "electronics", price: 5200, location: "Kumasi, Adum", region: "kumasi", seller: "Sample Tech Hub", whatsapp: "233206674019" },
-  { id: 5, title: "43\" Smart LED TV", category: "electronics", price: 3100, oldPrice: 3500, location: "Takoradi", region: "western", seller: "Sample Electronics", whatsapp: "233206674019" },
-  { id: 6, title: "Ladies' Kente Print Dress", category: "fashion", price: 280, location: "Accra, Osu", region: "accra", seller: "Sample Boutique", whatsapp: "233206674019", featured: true },
-  { id: 7, title: "Shea Butter Skincare Set", category: "fashion", price: 120, oldPrice: 150, location: "Tamale", region: "north", seller: "Sample Naturals", whatsapp: "233206674019" },
-  { id: 8, title: "Toyota Corolla 2016, Automatic", category: "auto", price: 145000, location: "Accra, Abossey Okai", region: "accra", seller: "Sample Motors", whatsapp: "233206674019" },
-  { id: 9, title: "Car Rental — Daily from", category: "auto", price: 450, location: "Kumasi", region: "kumasi", seller: "Sample Rentals", whatsapp: "233206674019" },
-  { id: 10, title: "2-Bedroom Apartment for Rent (per month)", category: "property", price: 3500, location: "East Legon", region: "accra", seller: "Sample Realty", whatsapp: "233206674019", featured: true },
-  { id: 11, title: "Plot of Land, Documented", category: "property", price: 85000, location: "Kasoa", region: "central", seller: "Sample Lands", whatsapp: "233206674019" },
-  { id: 12, title: "3-Seater Fabric Sofa", category: "home", price: 2800, oldPrice: 3300, location: "Kumasi", region: "kumasi", seller: "Sample Furniture", whatsapp: "233206674019" },
-  { id: 13, title: "Cement, 50kg bag", category: "home", price: 98, location: "Tema", region: "accra", seller: "Sample Building Supplies", whatsapp: "233206674019" },
-  { id: 14, title: "Wedding Photography & Video Package", category: "services", price: 4500, oldPrice: 5200, location: "Accra", region: "accra", seller: "Sample Studios", whatsapp: "233206674019" },
-  { id: 15, title: "Home Deep Cleaning", category: "services", price: 600, location: "Accra & Tema", region: "accra", seller: "Sample Cleaners", whatsapp: "233206674019" },
-  { id: 16, title: "Catering for Events (per head from)", category: "food", price: 85, location: "Cape Coast", region: "central", seller: "Sample Catering", whatsapp: "233206674019" },
+  { id: 1, image: "assets/photos/p1.webp", title: "Jasmine Rice, 25kg bag", category: "food", price: 650, oldPrice: 720, location: "Kumasi", region: "kumasi", seller: "Sample Foods Ltd", whatsapp: "233206674019", featured: true },
+  { id: 2, image: "assets/photos/p2.webp", title: "Pure Vegetable Cooking Oil, 5L", category: "food", price: 165, location: "Accra", region: "accra", seller: "Sample Foods Ltd", whatsapp: "233206674019" },
+  { id: 3, image: "assets/photos/p3.webp", title: "Smartphone 128GB, Dual SIM", category: "electronics", price: 2400, oldPrice: 2800, location: "Accra, Circle", region: "accra", seller: "Sample Phones", whatsapp: "233206674019", featured: true },
+  { id: 4, image: "assets/photos/p4.webp", title: "Laptop Core i5, 8GB RAM, 256GB SSD", category: "electronics", price: 5200, location: "Kumasi, Adum", region: "kumasi", seller: "Sample Tech Hub", whatsapp: "233206674019" },
+  { id: 5, image: "assets/photos/p5.webp", title: "43\" Smart LED TV", category: "electronics", price: 3100, oldPrice: 3500, location: "Takoradi", region: "western", seller: "Sample Electronics", whatsapp: "233206674019" },
+  { id: 6, image: "assets/photos/p6.webp", title: "Ladies' Kente Print Dress", category: "fashion", price: 280, location: "Accra, Osu", region: "accra", seller: "Sample Boutique", whatsapp: "233206674019", featured: true },
+  { id: 7, image: "assets/photos/p7.webp", title: "Shea Butter Skincare Set", category: "fashion", price: 120, oldPrice: 150, location: "Tamale", region: "north", seller: "Sample Naturals", whatsapp: "233206674019" },
+  { id: 8, image: "assets/photos/p8.webp", title: "Toyota Corolla 2016, Automatic", category: "auto", price: 145000, location: "Accra, Abossey Okai", region: "accra", seller: "Sample Motors", whatsapp: "233206674019" },
+  { id: 9, image: "assets/photos/p9.webp", title: "Car Rental — Daily from", category: "auto", price: 450, location: "Kumasi", region: "kumasi", seller: "Sample Rentals", whatsapp: "233206674019" },
+  { id: 10, image: "assets/photos/p10.webp", title: "2-Bedroom Apartment for Rent (per month)", category: "property", price: 3500, location: "East Legon", region: "accra", seller: "Sample Realty", whatsapp: "233206674019", featured: true },
+  { id: 11, image: "assets/photos/p11.webp", title: "Plot of Land, Documented", category: "property", price: 85000, location: "Kasoa", region: "central", seller: "Sample Lands", whatsapp: "233206674019" },
+  { id: 12, image: "assets/photos/p12.webp", title: "3-Seater Fabric Sofa", category: "home", price: 2800, oldPrice: 3300, location: "Kumasi", region: "kumasi", seller: "Sample Furniture", whatsapp: "233206674019" },
+  { id: 13, image: "assets/photos/p13.webp", title: "Cement, 50kg bag", category: "home", price: 98, location: "Tema", region: "accra", seller: "Sample Building Supplies", whatsapp: "233206674019" },
+  { id: 14, image: "assets/photos/p14.webp", title: "Wedding Photography & Video Package", category: "services", price: 4500, oldPrice: 5200, location: "Accra", region: "accra", seller: "Sample Studios", whatsapp: "233206674019" },
+  { id: 15, image: "assets/photos/p15.webp", title: "Home Deep Cleaning", category: "services", price: 600, location: "Accra & Tema", region: "accra", seller: "Sample Cleaners", whatsapp: "233206674019" },
+  { id: 16, image: "assets/photos/p16.webp", title: "Catering for Events (per head from)", category: "food", price: 85, location: "Cape Coast", region: "central", seller: "Sample Catering", whatsapp: "233206674019" },
 ];
 
 // SAMPLE SELLERS — the Business Directory. Replace with real registered businesses.
@@ -99,6 +101,7 @@ const SPOTLIGHT = {
   headline: "From Tamale shea nuts to skincare sold across Ghana",
   story: "Sample Naturals started with one woman making shea butter at home. Today her skincare sets reach buyers in Accra, Kumasi and beyond — sample story, replace with a real one.",
   quote: "Customers now find me without me going to the market every day.",
+  image: "assets/photos/spotlight.webp",
   // Optional: link to a Facebook/TikTok/YouTube video about the business.
   video: "",
 };

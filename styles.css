@@ -251,6 +251,29 @@ p { margin: 0 0 1em; }
 .meta { font-size: .82rem; color: var(--muted); margin-bottom: 1rem; }
 .product-body .btn { margin-top: auto; }
 .empty { text-align: center; padding: 40px; color: var(--muted); }
+
+/* ---------- photos ---------- */
+.product-media, .dotd-media, .spotlight-avatar, .category-photo, .mini-thumb { position: relative; overflow: hidden; }
+.photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.product-media .badge-deal, .product-media .badge-feat, .product-media .heart,
+.dotd-media .badge-deal { z-index: 1; }
+.product-media .photo { transition: transform .3s; }
+.product:hover .product-media .photo { transform: scale(1.04); }
+.category { padding: 0; overflow: hidden; }
+.category-photo { aspect-ratio: 16 / 9; background: var(--tint); display: grid; place-items: center; }
+.category-photo .category-icon {
+  position: absolute; left: 14px; bottom: -18px; z-index: 1; font-size: 1.6rem;
+  width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center;
+  background: #fff; border: 2px solid var(--green-ink); box-shadow: 0 3px 0 var(--green-ink);
+}
+.category-photo:not(:has(.photo)) .category-icon { position: static; }
+.category > strong { padding: 26px 20px 0; }
+.category > small { padding: 0 20px; }
+.category > em { padding: 0 20px 20px; }
+.mini-thumb { width: 54px; height: 54px; border-radius: 10px; }
+.mini .mini-thumb { font-size: 2rem; display: grid; place-items: center; background: var(--tint); grid-row: span 2; padding: 0; }
+.spotlight-avatar { overflow: hidden; }
+.photo-credit { opacity: .7; }
 .empty a { color: var(--green); font-weight: 700; }
 
 /* ---------- steps ---------- */
