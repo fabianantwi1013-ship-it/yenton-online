@@ -61,6 +61,7 @@
           <a href="deals.html">Affordable Deals</a>
           <a href="directory.html">Business Directory</a>
           <a href="find.html">Find it for me</a>
+          <a href="faq.html">Questions &amp; answers</a>
         </div>
         <div>
           <h4>Sellers</h4>
@@ -76,7 +77,7 @@
       </div>
       <div class="container footer-bottom">
         <p class="footer-tagline"><span data-i18n="footer.tagline"></span> — <strong>Yɛtɔn Bebiaa!</strong></p>
-        <p>© <span id="year"></span> Yɛntɔn Online. Sellers handle their own transactions. All listings are subject to our advertising policy and applicable Ghanaian laws. <span class="photo-credit">Sample photos from <a href="https://unsplash.com" target="_blank" rel="noopener" style="display:inline">Unsplash</a>.</span></p>
+        <p>© <span id="year"></span> Yɛntɔn Online. Sellers handle their own transactions. All listings are subject to our advertising policy and applicable Ghanaian laws. <a href="terms.html" class="inline-link">Terms</a> · <a href="privacy.html" class="inline-link">Privacy</a>. <span class="photo-credit">Sample photos from <a href="https://unsplash.com" target="_blank" rel="noopener" style="display:inline">Unsplash</a>.</span></p>
       </div>
     </footer>
     <a class="wa-float" id="waFloat" target="_blank" rel="noopener" aria-label="Chat with Yɛntɔn Online on WhatsApp">💬</a>`;

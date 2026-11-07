@@ -694,3 +694,23 @@ p { margin: 0 0 1em; }
 .safety li { font-size: .95rem; }
 .safety-note { color: var(--muted); font-size: .88rem; margin: 0 0 .8rem; }
 @media (max-width: 960px) { .product-detail .dotd-media { min-height: 260px; } }
+
+/* ---------- FAQ, terms, privacy ---------- */
+.prose { max-width: 780px; }
+.prose h2 { font-size: 1.5rem; margin: 2rem 0 .7rem; }
+.prose h2:first-child { margin-top: 0; }
+.prose p, .prose li { line-height: 1.65; }
+.prose ul { padding-left: 1.3rem; display: grid; gap: .4rem; margin: 0 0 1rem; }
+.prose a { color: var(--green); font-weight: 600; }
+.muted-small { color: var(--muted); font-size: .9rem; margin-top: 2rem; }
+.faq { display: grid; gap: 10px; margin-bottom: 1rem; }
+.faq details { background: #fff; border: 2px solid var(--line); border-radius: 14px; padding: 0 18px; }
+.faq details[open] { border-color: var(--green); }
+.faq summary {
+  cursor: pointer; font-weight: 700; padding: 14px 28px 14px 0; list-style: none; position: relative;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; position: absolute; right: 0; top: 10px; font-size: 1.4rem; color: var(--green); }
+.faq details[open] summary::after { content: "−"; }
+.faq details p { margin: 0 0 14px; }
+.footer a.inline-link { display: inline; padding: 0; text-decoration: underline; }
