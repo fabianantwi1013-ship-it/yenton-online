@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <base href="/yenton-online/">
+  <title>Yɛntɔn Online</title>
+  <meta name="robots" content="noindex">
+  <script>document.documentElement.dataset.product = (location.pathname.match(/product-(\d+)\.html$/) || [])[1] || "";</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0a7a36">
+  <link rel="icon" href="assets/icon-192.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+</head>
+<body data-page="shop">
+<script>document.body.dataset.product = document.documentElement.dataset.product;</script>
+<div id="site-header"></div>
+
+<main>
+  <section class="page-hero page-hero-slim">
+    <div class="container">
+      <p class="crumbs"><a href="index.html">Home</a> › <a href="shop.html">Shop</a></p>
+    </div>
+  </section>
+
+  <section class="section section-tight">
+    <div class="container" id="productView">
+      <p class="empty">Loading…</p>
+    </div>
+  </section>
+
+  <section class="section section-tight">
+    <div class="container" id="safetyTips"></div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">More like this</p>
+          <h2>Featured products</h2>
+        </div>
+        <a class="btn btn-outline btn-sm" href="shop.html">See all →</a>
+      </div>
+      <div class="product-grid" id="relatedGrid"></div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<script src="i18n.js"></script>
+<script src="data.js"></script>
+<script src="sheet.js"></script>
+<script src="layout.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

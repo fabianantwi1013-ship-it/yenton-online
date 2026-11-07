@@ -1,10 +1,10 @@
 // Offline support: always try the network first (so updates show immediately),
 // and fall back to the last saved copy when the connection drops.
-const CACHE = "yenton-v4";
+const CACHE = "yenton-v5";
 const CORE = [
   "index.html", "shop.html", "deals.html", "directory.html", "how-it-works.html",
   "packages.html", "advertise.html", "contact.html", "find.html", "report.html", "faq.html", "terms.html", "privacy.html",
-  "styles.css", "i18n.js", "data.js", "layout.js", "app.js",
+  "styles.css", "i18n.js", "data.js", "sheet.js", "layout.js", "app.js",
   "assets/yenton-poster.webp", "assets/mascot-face.jpg", "assets/icon-192.png",
 ];
 

@@ -1,4 +1,4 @@
-(function () {
+(async function () {
   const $ = (sel) => document.querySelector(sel);
   const catById = Object.fromEntries(CATEGORIES.map((c) => [c.id, c]));
   const regionById = Object.fromEntries(REGIONS.map((r) => [r.id, r]));
@@ -293,7 +293,12 @@
   // ---------- product page ----------
   function renderProduct() {
     const p = productById[Number(document.body.dataset.product)];
-    if (!p) return;
+    if (!p) {
+      $("#productView").innerHTML = `<div class="empty">${mascot("Sorry, we can't find that page. It may have been sold or removed.")}
+        <p><a class="btn btn-primary" href="shop.html">Browse the shop →</a></p></div>`;
+      $("#relatedGrid").innerHTML = PRODUCTS.filter((x) => x.featured).slice(0, 4).map(productCard).join("");
+      return;
+    }
     const cat = catById[p.category];
     const seller = sellerByName[p.seller] || {};
     const discount = discountOf(p);
@@ -674,7 +679,7 @@
       $("#contactEmail").href = "mailto:" + CONFIG.email;
     }
     if ($("#fbProof")) $("#fbProof").href = CONFIG.socials.Facebook;
-    $("#socials").innerHTML = Object.entries(CONFIG.socials)
+    $("#socials").innerHTML = Object.entries(CONFIG.socials).filter(([, url]) => url)
       .map(([name, url]) => `<a href="${url}" target="_blank" rel="noopener">${name}</a>`).join("");
     $("#year").textContent = new Date().getFullYear();
     updateSavedCount();
@@ -686,8 +691,32 @@
     });
   }
 
+  // ---------- products from the Google Sheet ----------
+  // Shows the last copy saved on this phone straight away and refreshes it in the background,
+  // so new rows appear on the next page a visitor opens. First visits wait up to 5 seconds.
+  async function loadSheetProducts() {
+    if (!CONFIG.productsSheet || typeof Sheet === "undefined") return;
+    const use = (csv) => {
+      const list = Sheet.toProducts(csv, CATEGORIES, REGIONS, CONFIG.whatsapp);
+      if (!list.length) return false;
+      PRODUCTS.splice(0, PRODUCTS.length, ...list);
+      for (const id in productById) delete productById[id];
+      list.forEach((p) => (productById[p.id] = p));
+      return true;
+    };
+    const fresh = fetch(CONFIG.productsSheet, { cache: "no-store" })
+      .then((r) => (r.ok ? r.text() : Promise.reject(r.status)))
+      .then((csv) => { store.set("yenton-sheet", csv); return csv; });
+    const cached = store.get("yenton-sheet", null);
+    if (cached && use(cached)) { fresh.catch(() => {}); return; }
+    try {
+      use(await Promise.race([fresh, new Promise((_, fail) => setTimeout(fail, 5000))]));
+    } catch {}
+  }
+
   // ---------- init ----------
   renderShared();
+  await loadSheetProducts();
   if ($("#searchCategory")) $("#searchCategory").insertAdjacentHTML("beforeend", catOptions);
   if ($("#categoryGrid")) renderCategories();
   if ($("#heroGrid")) renderHero();
