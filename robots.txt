@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://fabianantwi1013-ship-it.github.io/yenton-online/sitemap.xml

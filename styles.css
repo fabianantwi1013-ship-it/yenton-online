@@ -669,3 +669,28 @@ p { margin: 0 0 1em; }
   .logo-text { font-size: 1.15rem; }
   .logo-mark { width: 34px; height: 34px; font-size: 1.25rem; }
 }
+
+/* ---------- product page ---------- */
+.page-hero-slim { padding: 18px 0 6px; }
+.page-hero-slim .crumbs { margin: 0; }
+.product-body h3 a, .dotd h2 a { color: inherit; text-decoration: none; }
+.product-body h3 a:hover, .dotd h2 a:hover { color: var(--green); text-decoration: underline; }
+.media-link { position: absolute; inset: 0; z-index: 1; }
+.product-media .heart { z-index: 2; }
+.product-media .badge-deal, .product-media .badge-feat { pointer-events: none; }
+.product-detail .dotd-media { min-height: 380px; }
+.product-detail .dotd-media .heart { z-index: 2; }
+.product-detail h1 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); margin-bottom: .4rem; }
+.product-detail .card-actions { margin-top: 10px; }
+.seller-box { background: #f0faf3; border: 1px solid #c8ead4; border-radius: 14px; padding: 14px 16px; margin-bottom: 8px; }
+.seller-box .seller-line { margin-bottom: .3rem; font-size: .95rem; }
+.seller-blurb { margin: 0 0 .4rem; font-size: .9rem; color: var(--muted); }
+.text-link { font-weight: 700; font-size: .88rem; color: var(--green); }
+.safety {
+  background: #fff; border: 2px solid var(--green-ink); border-radius: var(--radius); padding: clamp(18px, 3vw, 28px);
+}
+.safety h2 { font-size: 1.4rem; margin-bottom: .6rem; }
+.safety ul { margin: 0 0 1rem; padding-left: 1.2rem; display: grid; gap: .45rem; }
+.safety li { font-size: .95rem; }
+.safety-note { color: var(--muted); font-size: .88rem; margin: 0 0 .8rem; }
+@media (max-width: 960px) { .product-detail .dotd-media { min-height: 260px; } }

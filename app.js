@@ -14,6 +14,8 @@
   const catOptions = CATEGORIES.map((c) => `<option value="${c.id}">${escape(c.name)}</option>`).join("");
   const regionOptions = REGIONS.map((r) => `<option value="${r.id}">${escape(r.name)}</option>`).join("");
   const siteLink = (path) => `https://${CONFIG.siteUrl}/${path}`;
+  // Each product has its own page, built by tools/build-pages.mjs.
+  const productUrl = (p) => `product-${p.id}.html`;
   const discountOf = (p) => (p.oldPrice ? Math.round((1 - p.price / p.oldPrice) * 100) : 0);
   // Photo over the category icon; if the photo fails to load, the icon shows instead.
   const photo = (src, alt) =>
@@ -47,6 +49,7 @@
       <article class="product">
         <div class="product-media cat-${p.category}">
           <span>${cat.icon}</span>${photo(p.image, p.title)}
+          <a class="media-link" href="${productUrl(p)}" aria-label="${escape(p.title)}"></a>
           ${discount ? `<b class="badge-deal">-${discount}%</b>` : ""}
           ${p.featured ? `<b class="badge-feat">${t("badge.featured")}</b>` : ""}
           <button class="heart ${saved.has(p.id) ? "on" : ""}" data-save="${p.id}" aria-label="${t("card.save")}" aria-pressed="${saved.has(p.id)}">${saved.has(p.id) ? "❤" : "♡"}</button>
@@ -54,7 +57,7 @@
         </div>
         <div class="product-body">
           <p class="product-cat">${escape(cat.name)}</p>
-          <h3>${escape(p.title)}</h3>
+          <h3><a href="${productUrl(p)}">${escape(p.title)}</a></h3>
           <p class="price">${cedi(p.price)} ${p.oldPrice ? `<s>${cedi(p.oldPrice)}</s>` : ""}</p>
           <p class="meta">📍 ${escape(p.location)}</p>
           <p class="seller-line">
@@ -83,7 +86,20 @@
     }
     const share = e.target.closest("[data-share]");
     if (share) shareToStatus(productById[Number(share.dataset.share)], share);
+    const shareLink = e.target.closest("[data-share-link]");
+    if (shareLink) shareProductLink(productById[Number(shareLink.dataset.shareLink)]);
   });
+
+  // Send a friend the product's own page. The link shows as a preview card with the photo and price.
+  async function shareProductLink(p) {
+    const url = siteLink(productUrl(p));
+    const text = `${p.title} — ${cedi(p.price)} on Yɛntɔn Online`;
+    if (navigator.share) {
+      try { await navigator.share({ title: p.title, text, url }); } catch {}
+    } else {
+      window.open(`https://wa.me/?text=${encodeURIComponent(text + " " + url)}`, "_blank", "noopener");
+    }
+  }
 
   // ---------- WhatsApp Status share image ----------
   function loadImage(src) {
@@ -214,7 +230,7 @@
     try {
       const blob = await makeStatusImage(p);
       const file = new File([blob], `yenton-${p.id}.png`, { type: "image/png" });
-      const text = `${p.title} — ${cedi(p.price)} on Yɛntɔn Online. ${siteLink("shop.html?cat=" + p.category)}`;
+      const text = `${p.title} — ${cedi(p.price)} on Yɛntɔn Online. ${siteLink(productUrl(p))}`;
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
         await navigator.share({ files: [file], text });
       } else {
@@ -254,7 +270,7 @@
         <div class="dotd-media cat-${p.category}"><span>${cat.icon}</span>${photo(p.image, p.title)}<b class="badge-deal">-${discountOf(p)}%</b></div>
         <div class="dotd-body">
           <p class="dotd-tag">🔥 ${t("deal.title")}</p>
-          <h2>${escape(p.title)}</h2>
+          <h2><a href="${productUrl(p)}">${escape(p.title)}</a></h2>
           <p class="price big">${cedi(p.price)} <s>${cedi(p.oldPrice)}</s></p>
           <p class="meta">📍 ${escape(p.location)} · ${escape(p.seller)}</p>
           <div class="countdown"><span>${t("deal.ends")}</span> <b id="countdown">--:--:--</b></div>
@@ -272,6 +288,66 @@
     };
     tick();
     setInterval(tick, 1000);
+  }
+
+  // ---------- product page ----------
+  function renderProduct() {
+    const p = productById[Number(document.body.dataset.product)];
+    if (!p) return;
+    const cat = catById[p.category];
+    const seller = sellerByName[p.seller] || {};
+    const discount = discountOf(p);
+    const msg = `Hello ${p.seller}, I saw your "${p.title}" (${cedi(p.price)}) on Yɛntɔn Online: ${siteLink(productUrl(p))} Is it still available?`;
+    $("#productView").innerHTML = `
+      <article class="dotd product-detail">
+        <div class="dotd-media cat-${p.category}">
+          <span>${cat.icon}</span>${p.image ? `<img class="photo" src="${escape(p.image)}" alt="${escape(p.title)}" fetchpriority="high" onerror="this.remove()">` : ""}
+          ${discount ? `<b class="badge-deal">-${discount}%</b>` : ""}
+          <button class="heart ${saved.has(p.id) ? "on" : ""}" data-save="${p.id}" aria-label="${t("card.save")}" aria-pressed="${saved.has(p.id)}">${saved.has(p.id) ? "❤" : "♡"}</button>
+        </div>
+        <div class="dotd-body">
+          <p class="product-cat">${escape(cat.name)}</p>
+          <h1>${escape(p.title)}</h1>
+          <p class="price big">${cedi(p.price)} ${p.oldPrice ? `<s>${cedi(p.oldPrice)}</s>` : ""}</p>
+          <p class="meta">📍 ${escape(p.location)}</p>
+          <div class="seller-box">
+            <p class="seller-line">
+              ${escape(p.seller)}
+              ${seller.verified ? `<span class="verified" title="Checked by the Yɛntɔn team">✔ ${t("badge.verified")}</span>` : ""}
+              ${seller.rating ? `<span class="rating">★ ${seller.rating.toFixed(1)} <small>(${seller.reviews})</small></span>` : ""}
+            </p>
+            ${seller.blurb ? `<p class="seller-blurb">${escape(seller.blurb)}</p>` : ""}
+            <a class="text-link" href="shop.html?q=${encodeURIComponent(p.seller)}">More from this seller →</a>
+          </div>
+          <div class="card-actions">
+            <a class="btn btn-wa" href="${waLink(p.whatsapp, msg)}" target="_blank" rel="noopener">${t("card.contact")}</a>
+          </div>
+          <div class="card-actions">
+            <button class="btn btn-outline btn-sm" data-share-link="${p.id}">🔗 Send to a friend</button>
+            <button class="btn btn-share btn-sm" data-share="${p.id}">↗ WhatsApp Status image</button>
+          </div>
+        </div>
+      </article>`;
+    const related = PRODUCTS.filter((x) => x.category === p.category && x.id !== p.id);
+    const others = PRODUCTS.filter((x) => x.category !== p.category && x.featured);
+    $("#relatedGrid").innerHTML = [...related, ...others].slice(0, 4).map(productCard).join("");
+  }
+
+  // ---------- buyer safety ----------
+  function renderSafetyTips() {
+    const report = waLink(CONFIG.whatsapp, "Hello Yɛntɔn Online, I want to report a problem with a seller: ");
+    document.querySelectorAll("#safetyTips").forEach((el) => (el.innerHTML = `
+      <div class="safety">
+        <h2>🛡️ Buy safely</h2>
+        <ul>
+          <li><b>See it before you pay.</b> Meet in a busy public place, or use a delivery service you trust.</li>
+          <li><b>Check it works</b> and matches the photos before handing over money.</li>
+          <li><b>Avoid deposits to strangers.</b> Look for the <span class="verified">✔ Verified</span> badge, checked by our team.</li>
+          <li><b>Never share your MoMo PIN</b> or codes sent to your phone. Yɛntɔn Online will never ask for them.</li>
+        </ul>
+        <p class="safety-note">Sellers handle their own sales. If something goes wrong, tell us and we'll look into the seller.</p>
+        <a class="btn btn-outline btn-sm" href="${report}" target="_blank" rel="noopener">⚠ Report a seller</a>
+      </div>`));
   }
 
   // ---------- Seller Spotlight ----------
@@ -618,6 +694,8 @@
   if ($("#dealOfDay")) renderDealOfDay();
   if ($("#spotlight")) renderSpotlight();
   if ($("#productGrid")) setupShop();
+  if ($("#productView")) renderProduct();
+  if ($("#safetyTips")) renderSafetyTips();
   if ($("#dealsGrid")) renderDeals();
   if ($("#directoryGrid")) renderDirectory();
   if ($("#advertiseForm")) setupAdvertiseForm();

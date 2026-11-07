@@ -62,6 +62,8 @@ const PRICE_BANDS = [
 // image: put the seller's photo in assets/photos/ (about 600×450, .webp or .jpg). Leave it out to show the category icon.
 // Sample photos are free stock photos from Unsplash.
 // `seller` must match a name in SELLERS below to show its Verified badge and rating.
+// After adding, removing or editing products, run:  node tools/build-pages.mjs
+// (it makes each product's own page and its WhatsApp/Facebook link preview).
 const PRODUCTS = [
   { id: 1, image: "assets/photos/p1.webp", title: "Jasmine Rice, 25kg bag", category: "food", price: 650, oldPrice: 720, location: "Kumasi", region: "kumasi", seller: "Sample Foods Ltd", whatsapp: "233206674019", featured: true },
   { id: 2, image: "assets/photos/p2.webp", title: "Pure Vegetable Cooking Oil, 5L", category: "food", price: 165, location: "Accra", region: "accra", seller: "Sample Foods Ltd", whatsapp: "233206674019" },
