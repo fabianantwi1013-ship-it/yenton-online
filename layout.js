@@ -68,6 +68,7 @@
           <a href="how-it-works.html">How it works</a>
           <a href="packages.html">Packages &amp; payment</a>
           <a href="advertise.html">Advertise With Us</a>
+          <a href="poster.html">Free QR poster</a>
           <a href="report.html">Campaign reports</a>
         </div>
         <div>

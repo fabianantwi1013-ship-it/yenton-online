@@ -521,6 +521,7 @@
               ${[1, 2, 3, 4, 5].map((n) => `<button data-rate="${n}" aria-label="${n} star${n > 1 ? "s" : ""}">★</button>`).join("")}
             </div>
             <a class="link" href="shop.html?q=${encodeURIComponent(b.name)}">See products →</a>
+            <a class="link link-muted" href="poster.html?seller=${encodeURIComponent(b.name)}">Get their QR poster</a>
           </div>
         </article>`;
     }).join("");
@@ -578,6 +579,123 @@
       window.open(waLink(CONFIG.whatsapp, text), "_blank", "noopener");
       thankYou(e.target, `Medaase, ${escape(d.name)}! Your details are ready in WhatsApp — just press send and add your photos. We'll reply soon.`);
     });
+  }
+
+  // ---------- QR posters and stickers ----------
+  function qrSvg(text) {
+    const qr = qrcode(0, "M");
+    qr.addData(text);
+    qr.make();
+    const n = qr.getModuleCount();
+    let d = "";
+    for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (qr.isDark(r, c)) d += `M${c} ${r}h1v1h-1z`;
+    return { n, svg: `<svg class="qr" viewBox="-2 -2 ${n + 4} ${n + 4}" shape-rendering="crispEdges" aria-label="QR code"><rect x="-2" y="-2" width="${n + 4}" height="${n + 4}" fill="#fff"/><path d="${d}" fill="#0b3d1f"/></svg>`, qr };
+  }
+
+  function setupPoster() {
+    const f = (id) => $("#" + id);
+    let layout = params.get("layout") === "stickers" ? "stickers" : "poster";
+    f("sellerNames").innerHTML = SELLERS.map((s) => `<option value="${escape(s.name)}">`).join("");
+    if (params.get("seller")) f("pName").value = params.get("seller");
+
+    function details() {
+      const name = f("pName").value.trim();
+      const phone = f("pPhone").value.replace(/\D/g, "");
+      const wa = phone ? (phone.startsWith("0") ? "233" + phone.slice(1) : phone.length === 9 ? "233" + phone : phone) : "";
+      const link = document.querySelector('[name="pLink"]:checked').value;
+      let url, scanText;
+      if (!name) { url = siteLink("advertise.html"); scanText = "Scan to advertise your products with us"; }
+      else if (link === "whatsapp" && wa) { url = waLink(wa, `Hello ${name}, I saw your poster. `); scanText = "Scan to chat with us on WhatsApp"; }
+      else if (link === "home") { url = siteLink(""); scanText = "Scan to shop on Yɛntɔn Online"; }
+      else { url = siteLink("shop.html?q=" + encodeURIComponent(name)); scanText = "Scan to see our products"; }
+      const error = name && link === "whatsapp" && !wa ? "Add your WhatsApp number for the WhatsApp option." : "";
+      return { name, tagline: f("pTagline").value.trim(), phoneShown: f("pPhone").value.trim(), url, scanText, error };
+    }
+
+    const brand = `<div class="ps-brand"><span class="logo-mark">Y</span><span>Yɛntɔn <b>Online</b></span></div>`;
+    const fit = (text, big, small, max) => (text.length > max ? small : big);
+
+    function poster(d) {
+      const { svg } = qrSvg(d.url);
+      const title = d.name || "Sell more with Yɛntɔn!";
+      const sub = d.name ? d.tagline : "Your Marketplace. Your Customers. More Sales.";
+      return `<div class="ps-poster">
+        ${brand}
+        <h2 class="ps-title" style="font-size:${fit(title, "58pt", title.length > 26 ? "34pt" : "44pt", 16)}">${escape(title)}</h2>
+        ${sub ? `<p class="ps-sub">${escape(sub)}</p>` : ""}
+        <div class="ps-plank">📱 SCAN ME</div>
+        <div class="ps-qr">${svg}</div>
+        <p class="ps-scan">${escape(d.scanText)}</p>
+        ${d.name && d.phoneShown ? `<p class="ps-phone">💬 WhatsApp: <b>${escape(d.phoneShown)}</b></p>` : !d.name ? `<p class="ps-phone">💬 WhatsApp: <b>${escape(CONFIG.whatsappDisplay)}</b></p>` : ""}
+        <div class="ps-band">
+          <img src="assets/mascot-face.jpg" alt="">
+          <div><p>${d.name ? "Find us and more Ghanaian businesses on" : "Ghana's marketplace for local businesses"}</p><b>Yɛntɔn Online</b><small>${escape(CONFIG.siteUrl)}</small></div>
+          <span class="ps-cheer">Yɛtɔn<br>Bebiaa!</span>
+        </div>
+      </div>`;
+    }
+
+    function stickers(d) {
+      const { svg } = qrSvg(d.url);
+      const title = d.name || "Yɛntɔn Online";
+      const one = `<div class="ps-sticker">
+        <div class="ps-st-text">
+          <p class="ps-st-title" style="font-size:${fit(title, "17pt", "12pt", 16)}">${escape(title)}</p>
+          ${d.tagline && d.name ? `<p class="ps-st-sub">${escape(d.tagline)}</p>` : ""}
+          <p class="ps-st-scan">📱 ${escape(d.scanText)}</p>
+          ${d.phoneShown && d.name ? `<p class="ps-st-sub">💬 ${escape(d.phoneShown)}</p>` : ""}
+          ${brand}
+        </div>
+        <div class="ps-st-qr">${svg}</div>
+      </div>`;
+      return `<div class="ps-stickers">${one.repeat(8)}</div>`;
+    }
+
+    function render() {
+      const d = details();
+      f("posterError").hidden = !d.error;
+      f("posterError").textContent = d.error;
+      f("sheet").innerHTML = layout === "poster" ? poster(d) : stickers(d);
+      scale();
+    }
+    function scale() {
+      const wrap = f("sheetWrap"), sheet = f("sheet");
+      const s = Math.min(1, wrap.clientWidth / sheet.offsetWidth);
+      sheet.style.transform = `scale(${s})`;
+      wrap.style.height = sheet.offsetHeight * s + "px";
+    }
+
+    document.querySelectorAll("[data-layout]").forEach((x) => x.classList.toggle("active", x.dataset.layout === layout));
+    f("posterForm").addEventListener("input", render);
+    document.querySelectorAll("[data-layout]").forEach((b) => b.addEventListener("click", () => {
+      layout = b.dataset.layout;
+      document.querySelectorAll("[data-layout]").forEach((x) => x.classList.toggle("active", x === b));
+      render();
+    }));
+    f("printPoster").addEventListener("click", () => {
+      if (details().error) return f("pPhone").focus();
+      window.print();
+    });
+    f("downloadQr").addEventListener("click", () => {
+      const d = details();
+      if (d.error) return f("pPhone").focus();
+      const { qr, n } = qrSvg(d.url);
+      const cell = Math.floor(1200 / (n + 8)), size = cell * (n + 8);
+      const canvas = document.createElement("canvas");
+      canvas.width = canvas.height = size;
+      const ctx = canvas.getContext("2d");
+      ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, size, size);
+      ctx.fillStyle = "#0b3d1f";
+      for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (qr.isDark(r, c)) ctx.fillRect((c + 4) * cell, (r + 4) * cell, cell, cell);
+      const a = document.createElement("a");
+      a.href = canvas.toDataURL("image/png");
+      a.download = `yenton-qr-${(d.name || "yenton").toLowerCase().replace(/[^a-z0-9]+/g, "-")}.png`;
+      a.click();
+    });
+    window.addEventListener("resize", scale);
+    window.addEventListener("beforeprint", () => (f("sheet").style.transform = "none"));
+    window.addEventListener("afterprint", scale);
+    render();
   }
 
   function setupFindForm() {
@@ -731,4 +849,5 @@
   if ($("#findForm")) setupFindForm();
   if ($("#referForm")) setupPackages();
   if ($("#reportForm")) setupReport();
+  if ($("#posterForm")) setupPoster();
 })();
